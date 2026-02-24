@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/build-frames-manifest.mjs",
-    "prebuild": "node scripts/build-frames-manifest.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

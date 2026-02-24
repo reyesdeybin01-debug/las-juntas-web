@@ -27,71 +27,92 @@ export default function Navbar() {
     const handleNavClick = () => setIsMobileOpen(false);
 
     return (
-        <nav
-            className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled
-                ? "bg-dark/90 backdrop-blur-xl border-b border-white/5 py-3"
-                : "bg-transparent py-5"
-                }`}
-            aria-label="Navegación principal"
-        >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-                {/* Logo */}
-                <a href="#inicio" className="flex items-center">
-                    <img
-                        src="/images/logo.png"
-                        alt="Las Juntas Logo"
-                        className="w-[90px] lg:w-[140px] h-auto object-contain transition-transform hover:scale-105 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] mix-blend-lighten"
-                    />
-                </a>
+        <>
+            <nav
+                className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled
+                    ? "bg-dark/90 backdrop-blur-xl border-b border-white/5 py-2"
+                    : "bg-transparent py-4"
+                    }`}
+                aria-label="Navegación principal"
+            >
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+                    {/* Logo */}
+                    <a href="#inicio" className="flex items-center">
+                        <img
+                            src="/images/logo_transparent.png"
+                            alt="Las Juntas Logo"
+                            className="w-[80px] lg:w-[130px] h-auto object-contain transition-transform hover:scale-105 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                        />
+                    </a>
 
-                {/* Desktop links */}
-                <ul className="hidden lg:flex items-center gap-8">
-                    {navLinks.map(({ href, label }) => (
-                        <li key={href}>
+                    {/* Desktop links */}
+                    <ul className="hidden lg:flex items-center gap-8">
+                        {navLinks.map(({ href, label }) => (
+                            <li key={href}>
+                                <a
+                                    href={href}
+                                    className="text-sm font-medium text-gray-300 hover:text-primary transition-all duration-300 tracking-wide hover:drop-shadow-[0_0_8px_rgba(198,40,40,0.8)]"
+                                >
+                                    {label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+
+                    {/* Cart + Hamburger */}
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={() => setIsOpen(true)}
+                            className="relative p-2 text-gray-300 hover:text-primary transition-colors"
+                            aria-label="Abrir carrito"
+                        >
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                            </svg>
+                            {totalItems > 0 && (
+                                <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center font-semibold">
+                                    {totalItems}
+                                </span>
+                            )}
+                        </button>
+
+                        <button
+                            onClick={() => setIsMobileOpen(!isMobileOpen)}
+                            className="lg:hidden p-2 text-gray-300 hover:text-primary transition-colors"
+                            aria-label="Menú de navegación"
+                            aria-expanded={isMobileOpen}
+                        >
+                            <div className="w-6 flex flex-col gap-1.5">
+                                <span className={`block h-0.5 bg-current transition-all duration-300 ${isMobileOpen ? "rotate-45 translate-y-2" : ""}`} />
+                                <span className={`block h-0.5 bg-current transition-all duration-300 ${isMobileOpen ? "opacity-0" : ""}`} />
+                                <span className={`block h-0.5 bg-current transition-all duration-300 ${isMobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                {/* Mobile horizontal scroll nav — always visible on mobile/tablet */}
+                <div
+                    className={`lg:hidden w-full overflow-x-auto transition-all duration-300 ${isScrolled ? "mt-1" : "mt-2"
+                        }`}
+                    style={{ WebkitOverflowScrolling: "touch" }}
+                >
+                    <div className="flex items-center gap-1 px-4 pb-1 min-w-max">
+                        {navLinks.map(({ href, label }) => (
                             <a
+                                key={href}
                                 href={href}
-                                className="text-sm font-medium text-gray-300 hover:text-primary transition-all duration-300 tracking-wide hover:drop-shadow-[0_0_8px_rgba(198,40,40,0.8)]"
+                                className="text-xs font-medium text-gray-400 hover:text-primary whitespace-nowrap px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/5 hover:border-primary/30"
                             >
                                 {label}
                             </a>
-                        </li>
-                    ))}
-                </ul>
-
-                {/* Cart + Hamburger */}
-                <div className="flex items-center gap-4">
-                    <button
-                        onClick={() => setIsOpen(true)}
-                        className="relative p-2 text-gray-300 hover:text-primary transition-colors"
-                        aria-label="Abrir carrito"
-                    >
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                        </svg>
-                        {totalItems > 0 && (
-                            <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center font-semibold">
-                                {totalItems}
-                            </span>
-                        )}
-                    </button>
-
-                    <button
-                        onClick={() => setIsMobileOpen(!isMobileOpen)}
-                        className="lg:hidden p-2 text-gray-300 hover:text-primary transition-colors"
-                        aria-label="Menú de navegación"
-                        aria-expanded={isMobileOpen}
-                    >
-                        <div className="w-6 flex flex-col gap-1.5">
-                            <span className={`block h-0.5 bg-current transition-all duration-300 ${isMobileOpen ? "rotate-45 translate-y-2" : ""}`} />
-                            <span className={`block h-0.5 bg-current transition-all duration-300 ${isMobileOpen ? "opacity-0" : ""}`} />
-                            <span className={`block h-0.5 bg-current transition-all duration-300 ${isMobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
-                        </div>
-                    </button>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            </nav>
 
-            {/* Mobile menu */}
+            {/* Mobile fullscreen menu (hamburger) */}
             <AnimatePresence>
                 {isMobileOpen && (
                     <motion.div
@@ -117,6 +138,6 @@ export default function Navbar() {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </nav>
+        </>
     );
 }

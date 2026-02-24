@@ -15,11 +15,11 @@ export default function Footer() {
                     {/* Logo + tagline */}
                     <div>
                         <a href="#inicio" className="inline-block mb-4 relative group">
-                            <div className="absolute inset-0 bg-white/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <div className="absolute inset-0 bg-white/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                             <img
-                                src="/images/logo.png"
+                                src="/images/logo_transparent.png"
                                 alt="Las Juntas Logo"
-                                className="w-[160px] h-auto object-contain relative z-10 opacity-90 group-hover:opacity-100 transition-all mix-blend-lighten drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                                className="w-[160px] h-auto object-contain relative z-10 opacity-90 group-hover:opacity-100 transition-all drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]"
                             />
                         </a>
                         <p className="text-gray-500 text-sm leading-relaxed">

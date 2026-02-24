@@ -1,5 +1,5 @@
-import CameraScroll from "@/components/CameraScroll";
 import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
 import FeaturedDishes from "@/components/FeaturedDishes";
 import Menu from "@/components/Menu";
 import Cart from "@/components/Cart";
@@ -19,7 +19,7 @@ export default function Home() {
             <div className="bg-glow bg-accent/10 w-[400px] h-[400px] bottom-[100vh] right-0" />
 
             <Navbar />
-            <CameraScroll />
+            <Hero />
             <FeaturedDishes />
             <Menu />
             <AboutUs />
