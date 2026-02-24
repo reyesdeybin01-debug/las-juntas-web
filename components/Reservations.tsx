@@ -45,10 +45,10 @@ export default function Reservations() {
         e.preventDefault();
         if (!validate()) return;
 
-        const message = encodeURIComponent(
-            `Hola \uD83D\uDC4B, quiero confirmar mi reserva en el restaurante:\n\n\uD83D\uDC64 Nombre: ${form.name}\n\uD83D\uDCC5 Fecha: ${form.date}\n\u23F0 Hora: ${form.time}\n\uD83D\uDC65 Personas: ${form.guests}\n\n\uD83C\uDF89 Ocasión: ${form.occasion}\nQuedo atento(a) a la confirmación. ¡Muchas gracias! \u2728`
-        );
-        window.open(`https://wa.me/50664111118?text=${message}`, "_blank");
+        const mensaje = `Hola 👋, quiero confirmar mi reserva en el restaurante:\n\n👤 Nombre: ${form.name}\n📅 Fecha: ${form.date}\n⏰ Hora: ${form.time}\n👥 Personas: ${form.guests}\n\n🎉 Ocasión: ${form.occasion}\nQuedo atento(a) a la confirmación. ¡Muchas gracias! ✨`;
+        const encodedMessage = encodeURIComponent(mensaje);
+
+        window.open(`https://wa.me/50664111118?text=${encodedMessage}`, "_blank");
     };
 
     const inputClasses =

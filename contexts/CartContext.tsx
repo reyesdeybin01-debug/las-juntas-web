@@ -73,9 +73,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                     `• ${i.name} x${i.quantity} — ₡${(i.price * i.quantity).toLocaleString("es-CR")}`
             )
             .join("\n");
-        return encodeURIComponent(
-            `Hola \uD83D\uDC4B, quiero realizar el siguiente pedido:\n\n\uD83D\uDED2 Pedido:\n${itemsList}\n\n\uD83D\uDCB0 Total: \u20A1${totalPrice.toLocaleString("es-CR")}\n\nQuedo atento(a) a la confirmación. Gracias \uD83C\uDF7D\uFE0F\u2728`
-        );
+        const mensaje = `Hola 👋, quiero realizar el siguiente pedido:\n\n🛒 Pedido:\n${itemsList}\n\n💰 Total: ₡${totalPrice.toLocaleString("es-CR")}\n\nQuedo atento(a) a la confirmación. Gracias 🍽️✨`;
+        return encodeURIComponent(mensaje);
     }, [items, totalPrice]);
 
     return (
