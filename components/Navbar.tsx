@@ -52,7 +52,7 @@ export default function Navbar() {
                             <li key={href}>
                                 <a
                                     href={href}
-                                    className="text-sm font-medium text-gray-300 hover:text-primary transition-all duration-300 tracking-wide hover:drop-shadow-[0_0_8px_rgba(198,40,40,0.8)]"
+                                    className="text-lg font-medium text-gray-300 hover:text-primary transition-all duration-300 tracking-wide hover:drop-shadow-[0_0_8px_rgba(198,40,40,0.8)]"
                                 >
                                     {label}
                                 </a>
@@ -104,7 +104,7 @@ export default function Navbar() {
                             <a
                                 key={href}
                                 href={href}
-                                className="text-xs font-medium text-gray-400 hover:text-primary whitespace-nowrap px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/5 hover:border-primary/30"
+                                className="text-lg font-medium text-gray-400 hover:text-primary whitespace-nowrap px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/5 hover:border-primary/30"
                             >
                                 {label}
                             </a>
@@ -131,7 +131,7 @@ export default function Navbar() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: i * 0.08 }}
-                                className="text-2xl font-light text-white hover:text-primary transition-colors tracking-wider"
+                                className="text-lg font-light text-white hover:text-primary transition-colors tracking-wider"
                             >
                                 {label}
                             </motion.a>
