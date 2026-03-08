@@ -349,3 +349,36 @@ export const featuredDishes = [
 export function formatPrice(price: number): string {
     return `₡${price.toLocaleString("es-CR")}`;
 }
+
+// Products with mandatory option selection
+export const ITEM_OPTIONS: Record<string, { label: string; options: string[] }> = {
+    // Platos Fuertes - Mar
+    "ma2": { label: "Elegir salsa", options: ["Salsa de mariscos", "Salsa de aguacate"] },
+    "ma4": { label: "Elegir preparación", options: ["Al ajillo", "Salsa de tomate"] },
+    // Platos Fuertes - Pollo
+    "po1": { label: "Elegir salsa", options: ["Demi-glace", "Bechamel"] },
+    "po3": { label: "Elegir salsa", options: ["Demi-glace", "Bechamel"] },
+    // Platos Fuertes - Res
+    "re1": { label: "Elegir salsa", options: ["Demi-glace", "Bechamel"] },
+    "re7": { label: "Elegir preparación", options: ["En salsa", "A la parrilla"] },
+    "re11": { label: "Elegir preparación", options: ["En salsa", "A la parrilla"] },
+    // Entradas
+    "gu1": { label: "Elegir tipo", options: ["Pollo", "Res"] },
+    "sb1": { label: "Elegir tipo", options: ["Pollo", "Camarón"] },
+    "sb2": { label: "Elegir tipo", options: ["Pollo", "Res", "Camarón", "Mixta"] },
+    "sb4": { label: "Elegir tipo", options: ["Camarón", "Mariscos", "Chorizo"] },
+    "sb7": { label: "Elegir tipo", options: ["Pollo", "Res", "Mixto"] },
+    "sb8": { label: "Elegir tipo", options: ["Pollo", "Res"] },
+    // Otras Delicias
+    "od4": { label: "Elegir tipo", options: ["Pollo", "Res"] },
+    "od5": { label: "Elegir tipo", options: ["Pollo", "Res", "Mixto"] },
+    "od10": { label: "Elegir tipo", options: ["Pollo", "Pescado"] },
+    "od12": { label: "Elegir tipo", options: ["Pollo", "Res"] },
+    "od19": { label: "Elegir tipo", options: ["Pollo", "Res"] },
+    "od22": { label: "Elegir tipo", options: ["Pollo", "Res"] },
+    "od27": { label: "Elegir tipo", options: ["Pollo", "Res", "Mixta"] },
+    "od28": { label: "Elegir tipo", options: ["Pollo", "Res"] },
+    "od29": { label: "Elegir tipo", options: ["Pollo", "Res"] },
+    // Pastas
+    "pa7": { label: "Elegir salsa", options: ["Salsa de tomate", "Salsa bechamel"] },
+};

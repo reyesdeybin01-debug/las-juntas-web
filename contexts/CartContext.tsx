@@ -1,13 +1,19 @@
 "use client";
 
 import React, { createContext, useContext, useState, useCallback, useMemo } from "react";
+import { formatPrice } from "@/data/menuData";
 
 export interface CartItem {
     id: string;
     name: string;
     price: number;
     quantity: number;
+    sides?: string[];
+    notes?: string;
+    selectedOption?: string;
 }
+
+export type DeliveryType = "pickup" | "delivery" | null;
 
 interface CartContextType {
     items: CartItem[];
@@ -19,6 +25,8 @@ interface CartContextType {
     totalPrice: number;
     isOpen: boolean;
     setIsOpen: (open: boolean) => void;
+    deliveryType: DeliveryType;
+    setDeliveryType: (type: DeliveryType) => void;
     formatWhatsAppMessage: () => string;
 }
 
@@ -27,13 +35,19 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: React.ReactNode }) {
     const [items, setItems] = useState<CartItem[]>([]);
     const [isOpen, setIsOpen] = useState(false);
+    const [deliveryType, setDeliveryType] = useState<DeliveryType>(null);
 
     const addItem = useCallback((item: Omit<CartItem, "quantity">) => {
         setItems((prev) => {
-            const existing = prev.find((i) => i.id === item.id);
+            const matchKey = (a: Omit<CartItem, "quantity">, b: CartItem) =>
+                a.id === b.id &&
+                (a.sides || []).join(",") === (b.sides || []).join(",") &&
+                (a.notes || "") === (b.notes || "") &&
+                (a.selectedOption || "") === (b.selectedOption || "");
+            const existing = prev.find((i) => matchKey(item, i));
             if (existing) {
                 return prev.map((i) =>
-                    i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+                    matchKey(item, i) ? { ...i, quantity: i.quantity + 1 } : i
                 );
             }
             return [...prev, { ...item, quantity: 1 }];
@@ -54,7 +68,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         );
     }, []);
 
-    const clearCart = useCallback(() => setItems([]), []);
+    const clearCart = useCallback(() => {
+        setItems([]);
+        setDeliveryType(null);
+    }, []);
 
     const totalItems = useMemo(
         () => items.reduce((sum, i) => sum + i.quantity, 0),
@@ -67,15 +84,34 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     );
 
     const formatWhatsAppMessage = useCallback(() => {
-        const itemsList = items
-            .map(
-                (i) =>
-                    `• ${i.name} x${i.quantity} — ₡${(i.price * i.quantity).toLocaleString("es-CR")}`
-            )
-            .join("\n");
-        const mensaje = `Hola 👋, quiero realizar el siguiente pedido:\n\n🛒 Pedido:\n${itemsList}\n\n💰 Total: ₡${totalPrice.toLocaleString("es-CR")}\n\nQuedo atento(a) a la confirmación. Gracias 🍽️✨`;
+        const itemLines = items
+            .map((i) => {
+                const displayName = i.selectedOption
+                    ? `${i.name} (${i.selectedOption})`
+                    : i.name;
+                let line = `- ${displayName} x${i.quantity} -- ${formatPrice(i.price)}`;
+                if (i.sides && i.sides.length > 0) {
+                    line += `\n  Acompañamientos: ${i.sides.join(", ")}`;
+                }
+                if (i.notes && i.notes.trim()) {
+                    line += `\n  Nota: ${i.notes.trim()}`;
+                }
+                return line;
+            })
+            .join("\n\n");
+
+        const subtotal = formatPrice(totalPrice);
+
+        let mensaje = `Hola, me gustaria hacer el siguiente pedido:\n\nPEDIDO:\n${itemLines}\n\n`;
+
+        if (deliveryType === "pickup") {
+            mensaje += `Subtotal aproximado: ${subtotal}\n*El total final se confirma con el restaurante (incluye empaque)\n\nPaso a recoger. Gracias!`;
+        } else if (deliveryType === "delivery") {
+            mensaje += `Subtotal aproximado: ${subtotal}\n*El total final se confirma con el restaurante (incluye empaque y envio)\n\nEnvio a domicilio, les comparto mi ubicacion. Gracias!`;
+        }
+
         return encodeURIComponent(mensaje);
-    }, [items, totalPrice]);
+    }, [items, totalPrice, deliveryType]);
 
     return (
         <CartContext.Provider
@@ -89,6 +125,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 totalPrice,
                 isOpen,
                 setIsOpen,
+                deliveryType,
+                setDeliveryType,
                 formatWhatsAppMessage,
             }}
         >

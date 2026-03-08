@@ -4,6 +4,7 @@ import FeaturedDishes from "@/components/FeaturedDishes";
 import Menu from "@/components/Menu";
 import Cart from "@/components/Cart";
 import AboutUs from "@/components/AboutUs";
+import News from "@/components/News";
 import Reservations from "@/components/Reservations";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -23,6 +24,7 @@ export default function Home() {
             <FeaturedDishes />
             <Menu />
             <AboutUs />
+            <News />
             <Reservations />
             <Contact />
             <Footer />

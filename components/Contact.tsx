@@ -34,13 +34,12 @@ export default function Contact() {
                     transition={{ duration: 0.6 }}
                 >
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15720.11!2d-84.08!3d10.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSan+Luis+de+Santo+Domingo+de+Heredia!5e0!3m2!1ses!2scr!4v1700000000000"
+                        src="https://maps.google.com/maps?q=Bar+y+Restaurante+Las+Juntas+Santo+Domingo+Heredia+Costa+Rica&t=&z=16&ie=UTF8&iwloc=&output=embed"
                         width="100%"
                         height="100%"
                         style={{ border: 0 }}
                         allowFullScreen
                         loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
                         title="Ubicación de Las Juntas Bar Restaurante"
                     />
                 </motion.div>

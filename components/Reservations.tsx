@@ -45,7 +45,7 @@ export default function Reservations() {
         e.preventDefault();
         if (!validate()) return;
 
-        const mensaje = `Hola 👋, quiero confirmar mi reserva en el restaurante:\n\n👤 Nombre: ${form.name}\n📅 Fecha: ${form.date}\n⏰ Hora: ${form.time}\n👥 Personas: ${form.guests}\n\n🎉 Ocasión: ${form.occasion}\nQuedo atento(a) a la confirmación. ¡Muchas gracias! ✨`;
+        const mensaje = `Hola, me gustaria reservar una mesa:\n\nNombre: ${form.name}\nFecha: ${form.date}\nHora: ${form.time}\nPersonas: ${form.guests}\nOcasion: ${form.occasion}\n\nQuedo pendiente de la confirmacion. Gracias!`;
         const encodedMessage = encodeURIComponent(mensaje);
 
         window.open(`https://wa.me/50664111118?text=${encodedMessage}`, "_blank");

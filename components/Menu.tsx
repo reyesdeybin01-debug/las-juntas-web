@@ -1,14 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/contexts/CartContext";
-import { menuCategories, formatPrice } from "@/data/menuData";
+import { menuCategories, formatPrice, ITEM_OPTIONS } from "@/data/menuData";
 import type { MenuCategory, SubCategory, MenuItem } from "@/data/menuData";
+import ProductModal from "./ProductModal";
+import SidesModal from "./SidesModal";
 
-function MenuItemCard({ item }: { item: MenuItem }) {
-    const { addItem } = useCart();
+const PLATOS_FUERTES_ID = "platos-fuertes";
 
+// Items that need the "término de cocción" placeholder (Mar, Res, Hamburguesas)
+const TERMINO_IDS = new Set([
+    "ma1","ma2","ma3","ma4","ma5","ma6",
+    "re1","re2","re3","re4","re5","re6","re7","re8","re9","re10","re11",
+    "hb1","hb2","hb3","hb4","hb5","hb6","hb7","hb8",
+]);
+const TERMINO_PLACEHOLDER = "¿Desea algún cambio en su pedido? Indique el término de cocción (1/4, medio, 3/4, bien cocido)";
+
+interface MenuItemCardProps {
+    item: MenuItem;
+    onClickAdd: (item: MenuItem) => void;
+}
+
+function MenuItemCard({ item, onClickAdd }: MenuItemCardProps) {
     return (
         <div className="flex items-center justify-between gap-3 p-3 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-primary/30 hover:bg-white/[0.06] transition-all duration-300 group">
             <div className="flex-1 min-w-0">
@@ -23,7 +38,7 @@ function MenuItemCard({ item }: { item: MenuItem }) {
                 </span>
             </div>
             <button
-                onClick={() => addItem({ id: item.id, name: item.name, price: item.price })}
+                onClick={() => onClickAdd(item)}
                 className="shrink-0 w-9 h-9 rounded-full bg-primary/10 border border-primary/30 text-primary-light
                    hover:bg-primary hover:text-white hover:border-primary transition-all duration-300
                    flex items-center justify-center"
@@ -37,7 +52,7 @@ function MenuItemCard({ item }: { item: MenuItem }) {
     );
 }
 
-function SubCategorySection({ sub }: { sub: SubCategory }) {
+function SubCategorySection({ sub, onClickAdd }: { sub: SubCategory; onClickAdd: (item: MenuItem) => void }) {
     return (
         <div className="mb-8">
             <h3 className="text-lg font-semibold text-primary-light mb-4 flex items-center gap-2">
@@ -46,14 +61,14 @@ function SubCategorySection({ sub }: { sub: SubCategory }) {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {sub.items.map((item) => (
-                    <MenuItemCard key={item.id} item={item} />
+                    <MenuItemCard key={item.id} item={item} onClickAdd={onClickAdd} />
                 ))}
             </div>
         </div>
     );
 }
 
-function CategoryContent({ category }: { category: MenuCategory }) {
+function CategoryContent({ category, onClickAdd }: { category: MenuCategory; onClickAdd: (item: MenuItem) => void }) {
     return (
         <motion.div
             key={category.id}
@@ -79,19 +94,19 @@ function CategoryContent({ category }: { category: MenuCategory }) {
             {/* Note */}
             {category.note && (
                 <div className="glass-card p-4 mb-6 border-l-4 border-accent">
-                    <p className="text-sm text-gray-300 italic">📌 {category.note}</p>
+                    <p className="text-sm text-gray-300 italic">{category.note}</p>
                 </div>
             )}
 
             {/* Items */}
             {category.subcategories ? (
                 category.subcategories.map((sub) => (
-                    <SubCategorySection key={sub.name} sub={sub} />
+                    <SubCategorySection key={sub.name} sub={sub} onClickAdd={onClickAdd} />
                 ))
             ) : category.items ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {category.items.map((item) => (
-                        <MenuItemCard key={item.id} item={item} />
+                        <MenuItemCard key={item.id} item={item} onClickAdd={onClickAdd} />
                     ))}
                 </div>
             ) : null}
@@ -101,52 +116,112 @@ function CategoryContent({ category }: { category: MenuCategory }) {
 
 export default function Menu() {
     const [activeCategory, setActiveCategory] = useState(menuCategories[0].id);
+    const { addItem } = useCart();
+
+    // Modal state
+    const [pendingItem, setPendingItem] = useState<MenuItem | null>(null);
+    const [modalType, setModalType] = useState<"product" | "sides" | null>(null);
+    const [notesPlaceholder, setNotesPlaceholder] = useState<string | undefined>(undefined);
+    const [pendingOptions, setPendingOptions] = useState<{ label: string; options: string[] } | null>(null);
 
     const current = menuCategories.find((c) => c.id === activeCategory) || menuCategories[0];
 
+    const handleClickAdd = useCallback(
+        (item: MenuItem) => {
+            setPendingItem(item);
+            setNotesPlaceholder(TERMINO_IDS.has(item.id) ? TERMINO_PLACEHOLDER : undefined);
+            setPendingOptions(ITEM_OPTIONS[item.id] || null);
+            if (activeCategory === PLATOS_FUERTES_ID) {
+                setModalType("sides");
+            } else {
+                setModalType("product");
+            }
+        },
+        [activeCategory]
+    );
+
+    const handleCloseModal = useCallback(() => {
+        setPendingItem(null);
+        setModalType(null);
+    }, []);
+
+    const handleAddProduct = useCallback(
+        (item: { id: string; name: string; price: number; notes?: string }) => {
+            addItem(item);
+        },
+        [addItem]
+    );
+
+    const handleAddWithSides = useCallback(
+        (item: { id: string; name: string; price: number; sides: string[]; notes?: string }) => {
+            addItem(item);
+        },
+        [addItem]
+    );
+
     return (
-        <section id="menu" className="section-container">
-            <motion.h2
-                className="section-title title-glow"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "0px" }}
-                transition={{ duration: 0.6 }}
-            >
-                Nuestro <span className="text-primary">Menú</span>
-            </motion.h2>
-            <motion.p
-                className="section-subtitle"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "0px" }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-            >
-                Una experiencia gastronómica para todos los gustos
-            </motion.p>
+        <>
+            <section id="menu" className="section-container">
+                <motion.h2
+                    className="section-title title-glow"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "0px" }}
+                    transition={{ duration: 0.6 }}
+                >
+                    Nuestro <span className="text-primary">Menú</span>
+                </motion.h2>
+                <motion.p
+                    className="section-subtitle"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "0px" }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                >
+                    Una experiencia gastronómica para todos los gustos
+                </motion.p>
 
-            {/* Category tabs */}
-            <div className="sticky top-14 sm:top-16 z-30 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-dark/80 backdrop-blur-xl border-y border-white/5 mb-8 overflow-x-auto scrollbar-hide">
-                <div className="flex gap-2 min-w-max">
-                    {menuCategories.map((cat) => (
-                        <button
-                            key={cat.id}
-                            onClick={() => setActiveCategory(cat.id)}
-                            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${activeCategory === cat.id
-                                ? "bg-primary text-white shadow-[0_0_15px_rgba(198,40,40,0.6)]"
-                                : "bg-white/5 text-gray-400 hover:text-white hover:bg-white/10"
-                                }`}
-                        >
-                            {cat.name}
-                        </button>
-                    ))}
+                {/* Category tabs */}
+                <div className="sticky top-14 sm:top-16 z-30 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-dark/80 backdrop-blur-xl border-y border-white/5 mb-8 overflow-x-auto scrollbar-hide">
+                    <div className="flex gap-2 min-w-max">
+                        {menuCategories.map((cat) => (
+                            <button
+                                key={cat.id}
+                                onClick={() => setActiveCategory(cat.id)}
+                                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${activeCategory === cat.id
+                                    ? "bg-primary text-white shadow-[0_0_15px_rgba(198,40,40,0.6)]"
+                                    : "bg-white/5 text-gray-400 hover:text-white hover:bg-white/10"
+                                    }`}
+                            >
+                                {cat.name}
+                            </button>
+                        ))}
+                    </div>
                 </div>
-            </div>
 
-            {/* Category content */}
-            <AnimatePresence mode="wait">
-                <CategoryContent category={current} />
-            </AnimatePresence>
-        </section>
+                {/* Category content */}
+                <AnimatePresence mode="wait">
+                    <CategoryContent category={current} onClickAdd={handleClickAdd} />
+                </AnimatePresence>
+            </section>
+
+            {/* Modals */}
+            <ProductModal
+                isOpen={modalType === "product"}
+                onClose={handleCloseModal}
+                item={pendingItem}
+                onAdd={handleAddProduct}
+                notesPlaceholder={notesPlaceholder}
+                itemOptions={pendingOptions}
+            />
+            <SidesModal
+                isOpen={modalType === "sides"}
+                onClose={handleCloseModal}
+                item={pendingItem}
+                onAdd={handleAddWithSides}
+                notesPlaceholder={notesPlaceholder}
+                itemOptions={pendingOptions}
+            />
+        </>
     );
 }

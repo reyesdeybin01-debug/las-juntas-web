@@ -20,6 +20,7 @@ export default function Navbar() {
         { href: "#destacados", label: "Lo Más Pedido" },
         { href: "#menu", label: "Menú" },
         { href: "#nosotros", label: "Nosotros" },
+        { href: "#noticias", label: "Noticias" },
         { href: "#reservas", label: "Reservas" },
         { href: "#contacto", label: "Contacto" },
     ];
