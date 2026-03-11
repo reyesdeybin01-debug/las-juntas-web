@@ -159,11 +159,10 @@ export default function Cart() {
                                     <div className="space-y-2">
                                         <p className="text-sm text-gray-400 font-medium">Tipo de entrega *</p>
                                         <label
-                                            className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all duration-200 ${
-                                                deliveryType === "pickup"
+                                            className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all duration-200 ${deliveryType === "pickup"
                                                     ? "bg-primary/10 border-primary/40 text-white"
                                                     : "bg-white/[0.03] border-white/[0.08] text-gray-400 hover:border-white/20"
-                                            }`}
+                                                }`}
                                         >
                                             <input
                                                 type="radio"
@@ -174,9 +173,8 @@ export default function Cart() {
                                                 className="sr-only"
                                             />
                                             <span
-                                                className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                                                    deliveryType === "pickup" ? "border-primary" : "border-gray-500"
-                                                }`}
+                                                className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${deliveryType === "pickup" ? "border-primary" : "border-gray-500"
+                                                    }`}
                                             >
                                                 {deliveryType === "pickup" && (
                                                     <span className="w-2 h-2 rounded-full bg-primary" />
@@ -185,11 +183,10 @@ export default function Cart() {
                                             <span className="text-sm">Paso a recoger al restaurante</span>
                                         </label>
                                         <label
-                                            className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all duration-200 ${
-                                                deliveryType === "delivery"
+                                            className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all duration-200 ${deliveryType === "delivery"
                                                     ? "bg-primary/10 border-primary/40 text-white"
                                                     : "bg-white/[0.03] border-white/[0.08] text-gray-400 hover:border-white/20"
-                                            }`}
+                                                }`}
                                         >
                                             <input
                                                 type="radio"
@@ -200,9 +197,8 @@ export default function Cart() {
                                                 className="sr-only"
                                             />
                                             <span
-                                                className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                                                    deliveryType === "delivery" ? "border-primary" : "border-gray-500"
-                                                }`}
+                                                className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${deliveryType === "delivery" ? "border-primary" : "border-gray-500"
+                                                    }`}
                                             >
                                                 {deliveryType === "delivery" && (
                                                     <span className="w-2 h-2 rounded-full bg-primary" />
@@ -227,11 +223,10 @@ export default function Cart() {
                                         target={canSend ? "_blank" : undefined}
                                         rel="noopener noreferrer"
                                         onClick={(e) => { if (!canSend) e.preventDefault(); }}
-                                        className={`block w-full py-3.5 rounded-full text-center font-semibold transition-all duration-300 ${
-                                            canSend
+                                        className={`block w-full py-3.5 rounded-full text-center font-semibold transition-all duration-300 ${canSend
                                                 ? "bg-green-600 text-white hover:bg-green-500 hover:shadow-lg hover:shadow-green-600/20"
                                                 : "bg-white/10 text-gray-500 cursor-not-allowed"
-                                        }`}
+                                            }`}
                                     >
                                         Enviar Pedido por WhatsApp
                                     </a>
