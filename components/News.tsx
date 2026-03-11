@@ -88,7 +88,7 @@ export default function News() {
             setEventModalOpen(true);
         } else if (item.action === "whatsapp") {
             const mensaje = "Hola, me gustaria saber la ubicacion de Soda Las Juntas. Gracias!";
-            window.open(`https://wa.me/50664111118?text=${encodeURIComponent(mensaje)}`, "_blank");
+            window.open(`https://wa.me/50683452464?text=${encodeURIComponent(mensaje)}`, "_blank");
         }
     };
 

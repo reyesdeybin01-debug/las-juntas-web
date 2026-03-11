@@ -48,7 +48,7 @@ export default function Reservations() {
         const mensaje = `Hola, me gustaria reservar una mesa:\n\nNombre: ${form.name}\nFecha: ${form.date}\nHora: ${form.time}\nPersonas: ${form.guests}\nOcasion: ${form.occasion}\n\nQuedo pendiente de la confirmacion. Gracias!`;
         const encodedMessage = encodeURIComponent(mensaje);
 
-        window.open(`https://wa.me/50664111118?text=${encodedMessage}`, "_blank");
+        window.open(`https://wa.me/50683452464?text=${encodedMessage}`, "_blank");
     };
 
     const inputClasses =

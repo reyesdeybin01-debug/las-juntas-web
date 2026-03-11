@@ -53,7 +53,7 @@ export default function Contact() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
                     <a
-                        href="https://wa.me/50664111118"
+                        href="https://wa.me/50683452464"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="glass-card-hover p-5 flex items-center gap-4"
@@ -61,7 +61,7 @@ export default function Contact() {
                         <span className="text-3xl">📞</span>
                         <div>
                             <p className="text-xs text-gray-500 uppercase tracking-wider">WhatsApp</p>
-                            <p className="text-white font-medium">+506 6411-1118</p>
+                            <p className="text-white font-medium">+506 8345-2464</p>
                         </div>
                     </a>
 

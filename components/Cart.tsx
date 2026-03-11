@@ -13,7 +13,7 @@ export default function Cart() {
     } = useCart();
 
     const canSend = items.length > 0 && deliveryType !== null;
-    const whatsappUrl = `https://wa.me/50664111118?text=${formatWhatsAppMessage()}`;
+    const whatsappUrl = `https://wa.me/50683452464?text=${formatWhatsAppMessage()}`;
 
     return (
         <>

@@ -47,8 +47,8 @@ export default function Footer() {
                         <h4 className="text-sm uppercase tracking-widest text-gray-400 mb-4">Contacto</h4>
                         <ul className="space-y-2 text-sm text-gray-500">
                             <li>
-                                <a href="https://wa.me/50664111118" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                                    📞 +506 6411-1118
+                                <a href="https://wa.me/50683452464" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                                    📞 +506 8345-2464
                                 </a>
                             </li>
                             <li>

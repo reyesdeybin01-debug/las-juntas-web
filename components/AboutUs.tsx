@@ -64,7 +64,7 @@ export default function AboutUs() {
                     <div className="space-y-4">
                         {[
                             { icon: "📍", text: "San Luis de Santo Domingo de Heredia, Costa Rica" },
-                            { icon: "📞", text: "WhatsApp: 6411-1118", href: "https://wa.me/50664111118" },
+                            { icon: "📞", text: "WhatsApp: 8345-2464", href: "https://wa.me/50683452464" },
                             { icon: "📧", text: "lasjuntasrestaurante@gmail.com", href: "mailto:lasjuntasrestaurante@gmail.com" },
                             { icon: "📘", text: "Facebook: RestauranteLasJuntas", href: "https://facebook.com/RestauranteLasJuntas" },
                         ].map(({ icon, text, href }) => (

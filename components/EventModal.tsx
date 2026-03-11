@@ -52,7 +52,7 @@ export default function EventModal({ isOpen, onClose }: EventModalProps) {
 
         const mensaje = `Hola, me gustaria consultar sobre el salon de eventos:\n\nNombre: ${form.name}\nTipo de evento: ${form.eventType}\nCantidad de personas: ${form.guests}\nFecha: ${form.date}\nHora: ${form.time}\n\nQuedo pendiente de la informacion. Gracias!`;
         const encoded = encodeURIComponent(mensaje);
-        window.open(`https://wa.me/50664111118?text=${encoded}`, "_blank");
+        window.open(`https://wa.me/50683452464?text=${encoded}`, "_blank");
         onClose();
     };
 
